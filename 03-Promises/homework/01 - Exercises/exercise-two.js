@@ -1,5 +1,5 @@
 "use strict";
-
+const { exec } = require('child_process');
 let exerciseUtils = require("./utils");
 
 let args = process.argv.slice(2).map(function (st) {
@@ -58,10 +58,22 @@ function problemB() {
       .catch(err => exerciseUtils.magenta(new Error(err)))
   )
 }
+//version con promise all
+// let promises = filenames.map((file) =>
+// 		exerciseUtils.promisifiedReadFile(file),
+// 	);
+// 	Promise.all(promises)
+// 		.then((stanza) => exerciseUtils.blue(stanza))
+// 		.catch((err) => exerciseUtils.magenta(new Error(err)));
 
 function problemC() {
   let fs = require("fs");
   function promisifiedWriteFile(filename, str) {
     // tu código acá:
+    return new Promise((resolve, reject) => {
+			fs.writeFile(filename, str, (err) => {
+				err ? reject : resolve;
+			});
+		});
   }
 }
